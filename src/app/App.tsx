@@ -10,6 +10,7 @@ import { store } from "../store/store";
 import { createStackNavigator } from "@react-navigation/stack";
 import StartGameScreen from "./screens/StartGameScreen";
 import GameCardScreen from "./screens/GameCardScreen";
+import { CardStyleInterpolators } from "@react-navigation/stack";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -46,7 +47,8 @@ export default function App() {
             component={MenuScreen}
             options={{
               headerShown: false,
-              animation: "slide_from_left",
+              animation: "fade_from_bottom",
+              cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
             }}
           />
           <Stack.Screen
@@ -54,7 +56,7 @@ export default function App() {
             component={GameModesScreen}
             options={{
               headerShown: false,
-              animation: "slide_from_right",
+              cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
             }}
           />
           <Stack.Screen
@@ -62,7 +64,7 @@ export default function App() {
             component={StartGameScreen}
             options={{
               headerShown: false,
-              animation: "slide_from_right",
+              cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
             }}
           />
           <Stack.Screen
@@ -70,7 +72,7 @@ export default function App() {
             component={GameCardScreen}
             options={{
               headerShown: false,
-              animation: "slide_from_right",
+              cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
             }}
           />
         </Stack.Navigator>

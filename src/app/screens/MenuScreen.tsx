@@ -5,6 +5,8 @@ import {
   Text,
   TextInput,
   Image,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import React, { useState } from "react";
 import Layout from "../../components/Layout";
@@ -18,19 +20,31 @@ import {
   selectAllusers,
   updateUser,
 } from "../../store/usersSlice";
+import {
+  selectLanguage,
+  toggleLanguage,
+  t,
+} from "../../store/localizationSlice";
 
 const MenuScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const users = useSelector(selectAllusers);
   const [localNames, setLocalNames] = useState<{ [key: string]: string }>({});
-  console.log(users);
+  const [isGameStarted, setIsGameStarted] = useState(false);
   const icons = {
     boy: require("../../../assets/icons/icon_boy.png"),
     girl: require("../../../assets/icons/icon_girl.png"),
   };
 
+  const language = useSelector(selectLanguage);
+
+  const handleChangeLanguage = () => {
+    dispatch(toggleLanguage());
+  };
+
   const handleAdd = () => {
     const newId = uuid.v4().toString();
+    setIsGameStarted(false);
     setLocalNames((prev) => ({ ...prev, [newId]: "" }));
     dispatch(addUser({ id: newId, username: "" }));
   };
@@ -43,7 +57,17 @@ const MenuScreen = ({ navigation }) => {
     });
     dispatch(removeUser(id));
   };
+  const handleStartGame = () => {
+    setIsGameStarted(true);
 
+    if (
+      users.some((user) => !user.username || user.username.trim() === "") ||
+      users.length === 0
+    ) {
+      return;
+    }
+    navigation.navigate("GameModes");
+  };
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Layout>
@@ -63,55 +87,74 @@ const MenuScreen = ({ navigation }) => {
         </View>
 
         <TouchableOpacity style={styles.button} onPress={handleAdd}>
-          <Text style={styles.buttonText}>Добавить игрока</Text>
+          <Text style={styles.buttonText}>{t("addPlayer", language)}</Text>
         </TouchableOpacity>
         <View style={styles.playerCards}>
-          <FlatList
-            data={users}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item }) => (
-              <View style={styles.playerCard}>
-                <View style={styles.playerCardLeft}>
-                  <Image
-                    source={item.username === "" ? icons.girl : icons.boy}
-                    style={{ width: 40, height: 40, marginRight: 10 }}
-                  />
-                  <TextInput
-                    style={styles.playerCardName}
-                    placeholder="Введите имя"
-                    placeholderTextColor="#DDD8B8"
-                    maxLength={32}
-                    value={localNames[item.id] ?? item.username}
-                    onChangeText={(text) =>
-                      setLocalNames((prev) => ({ ...prev, [item.id]: text }))
-                    }
-                    onBlur={() => {
-                      if (localNames[item.id] !== item.username) {
-                        dispatch(
-                          updateUser({
-                            id: item.id,
-                            username: localNames[item.id],
-                          })
-                        );
+          <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            style={{ flex: 1 }}
+          >
+            <FlatList
+              data={users}
+              keyExtractor={(item) => item.id.toString()}
+              keyboardShouldPersistTaps="handled"
+              renderItem={({ item }) => (
+                <View
+                  style={[
+                    styles.playerCard,
+                    isGameStarted && !item.username && styles.inputError,
+                  ]}
+                >
+                  <View style={styles.playerCardLeft}>
+                    <Image
+                      source={item.username === "" ? icons.girl : icons.boy}
+                      style={{ width: 40, height: 40, marginRight: 10 }}
+                    />
+                    <TextInput
+                      style={styles.playerCardName}
+                      placeholder={t("enterName", language)}
+                      placeholderTextColor="#DDD8B8"
+                      maxLength={32}
+                      value={localNames[item.id] ?? item.username}
+                      onChangeText={(text) =>
+                        setLocalNames((prev) => ({ ...prev, [item.id]: text }))
                       }
-                    }}
-                  />
+                      onBlur={() => {
+                        if (localNames[item.id] !== item.username) {
+                          dispatch(
+                            updateUser({
+                              id: item.id,
+                              username: localNames[item.id],
+                            })
+                          );
+                        }
+                      }}
+                    />
+                  </View>
+                  <TouchableOpacity onPress={() => handleDelete(item.id)}>
+                    <Text style={styles.playerDelete}>✕</Text>
+                  </TouchableOpacity>
                 </View>
-                <TouchableOpacity onPress={() => handleDelete(item.id)}>
-                  <Text style={styles.playerDelete}>✕</Text>
-                </TouchableOpacity>
-              </View>
-            )}
-          />
+              )}
+            />
+          </KeyboardAvoidingView>
         </View>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate("GameModes")}
-        >
-          <Text style={styles.buttonText}>Играть</Text>
+        <TouchableOpacity style={styles.button} onPress={handleStartGame}>
+          <Text style={styles.buttonText}>{t("play", language)}</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.changeLangButton}>
-          <Text style={styles.buttonText}>Сменить язык RU USA</Text>
+        <TouchableOpacity
+          style={styles.changeLangButton}
+          onPress={handleChangeLanguage}
+        >
+          <Text style={styles.buttonText}>{t("changeLanguage", language)}</Text>
+
+          <Image
+            source={
+              language === "ru"
+                ? require("../../../assets/icons/russia.png")
+                : require("../../../assets/icons/en.png")
+            }
+          />
         </TouchableOpacity>
       </Layout>
     </GestureHandlerRootView>
@@ -135,6 +178,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginVertical: 30,
+    boxShadow: "0 2 10 -4 rgba(27, 27, 27, 0.64)",
   },
   buttonText: {
     fontFamily: "Dongle-Regular",
@@ -175,7 +219,12 @@ const styles = StyleSheet.create({
   },
   changeLangButton: {
     justifyContent: "center",
-    alignItems: "center",
+    flexDirection: "row",
+    gap: 5,
+  },
+  inputError: {
+    borderWidth: 1,
+    borderColor: "red",
   },
 });
 export default MenuScreen;

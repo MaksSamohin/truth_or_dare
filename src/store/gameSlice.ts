@@ -40,6 +40,7 @@ const gameSlice = createSlice({
 });
 export const selectGamemode = (state: RootState) => state.gameData.gamemode;
 export const selectPlayer = (state: RootState) => state.gameData.currentPlayer;
+export const selectPlayers = (state: RootState) => state.gameData.playingUsers;
 export const { setPlayers, setCurrentPlayer, nextPlayer, updateGamemode } =
   gameSlice.actions;
 export default gameSlice.reducer;

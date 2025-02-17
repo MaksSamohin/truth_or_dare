@@ -6,71 +6,122 @@ import { selectGamemode, selectPlayer } from "../../store/gameSlice";
 import Icon from "react-native-vector-icons/Feather";
 import Layout from "../../components/Layout";
 import Svg, { Text as TextSvg } from "react-native-svg";
+import { Pressable } from "react-native";
+import { selectLanguage, t } from "../../store/localizationSlice";
 
 const StartGameScreen = ({ navigation }) => {
-  const dispatch = useDispatch();
-  const currentGamemode = useSelector(selectGamemode);
   const currentPlayer = useSelector(selectPlayer);
-
+  const language = useSelector(selectLanguage);
+  console.log(currentPlayer);
   const handleChoice = (type: "truth" | "dare") => {
-    navigation.navigate("GameCardScreen", { type });
+    navigation.navigate("GameCard", { type });
   };
 
   return (
     <Layout>
-      <TouchableOpacity onPress={() => navigation.goBack()}>
+      <Pressable onPress={() => navigation.navigate("GameModes")} hitSlop={150}>
         <Icon
           style={styles.backButton}
           name="chevron-left"
           size={24}
           color="#DDD8B8"
         />
-      </TouchableOpacity>
+      </Pressable>
       <View style={styles.card}>
-        <Text style={styles.playerName}>
+        <View style={styles.playerName}>
           <Svg height="40" width="200">
             <TextSvg
-              {...styles.gamemodeCardName}
-              x="0"
+              {...styles.playerCardName}
+              x="50%"
               y="30"
-              fontSize="40"
+              fontSize="36"
               stroke="#DDD8B8"
               strokeWidth="2"
               fill="none"
+              textAnchor="middle"
             >
-              {item.name}
+              {currentPlayer}
             </TextSvg>
             <TextSvg
-              {...styles.gamemodeCardName}
-              x="0"
+              {...styles.playerCardName}
+              x="50%"
               y="30"
-              fontSize="40"
-              fill="#696495"
+              fontSize="36"
+              fill="#542E71"
+              textAnchor="middle"
             >
-              {item.name}
+              {currentPlayer}
             </TextSvg>
           </Svg>
-        </Text>
-        <Text style={styles.subtitle}>твой ход</Text>
+        </View>
+        <Text style={styles.subtitle}>{t("yourTurn", language)}</Text>
         <View style={styles.buttonsContainer}>
           <TouchableOpacity
             style={styles.choiceButton}
             onPress={() => handleChoice("truth")}
           >
-            <Text style={styles.choiceText}>ПРАВДА</Text>
+            <Svg height="22" width="95">
+              <TextSvg
+                {...styles.playerCardName}
+                x="50%"
+                y="18"
+                fontSize="18"
+                stroke="#DDD8B8"
+                strokeWidth="2"
+                fill="none"
+                textAnchor="middle"
+              >
+                {t("truth", language)}
+              </TextSvg>
+              <TextSvg
+                {...styles.playerCardName}
+                x="50%"
+                y="18"
+                fontSize="18"
+                fill="#72528A"
+                textAnchor="middle"
+              >
+                {t("truth", language)}
+              </TextSvg>
+            </Svg>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.choiceButton}
             onPress={() => handleChoice("dare")}
           >
-            <Text style={styles.choiceText}>ДЕЙСТВИЕ</Text>
+            <Svg height="22" width="95">
+              <TextSvg
+                {...styles.buttonChoiceText}
+                x="50%"
+                y="18"
+                fontSize="18"
+                stroke="#DDD8B8"
+                strokeWidth="2"
+                fill="none"
+                textAnchor="middle"
+              >
+                {t("dare", language)}
+              </TextSvg>
+              <TextSvg
+                {...styles.buttonChoiceText}
+                x="50%"
+                y="18"
+                fontSize="18"
+                fill="#72528A"
+                textAnchor="middle"
+              >
+                {t("dare", language)}
+              </TextSvg>
+            </Svg>
           </TouchableOpacity>
         </View>
         <TouchableOpacity
           style={styles.randomButton}
           onPress={() => handleChoice(Math.random() < 0.5 ? "truth" : "dare")}
         >
-          <Text style={styles.randomButtonText}>Случайный выбор</Text>
+          <Text style={styles.randomButtonText}>
+            {t("randomChoice", language)}
+          </Text>
         </TouchableOpacity>
       </View>
     </Layout>
@@ -86,55 +137,71 @@ const styles = StyleSheet.create({
     top: 50,
     textShadowColor: "rgba(0, 0, 0, 0.2)",
     textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 1,
+    textShadowRadius: 15,
   },
   card: {
     marginTop: 150,
-    backgroundColor: "#532D7F",
+    backgroundColor: "#542E71",
     padding: 20,
     margin: 20,
-    borderRadius: 15,
+    borderRadius: 25,
     alignItems: "center",
     elevation: 5,
     borderColor: "#DDD8B8",
     borderWidth: 2,
   },
   playerName: {
-    fontSize: 28,
-    fontWeight: "bold",
-    color: "#DDD8B8",
+    textAlign: "center",
+    justifyContent: "center",
+    alignItems: "center",
   },
   subtitle: {
     fontSize: 18,
     color: "#DDD8B8",
-    marginBottom: 20,
+    marginBottom: 59,
+    fontFamily: "Dongle-Regular",
   },
   buttonsContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
-    width: "100%",
-    marginBottom: 15,
+    alignItems: "center",
+    marginBottom: 65,
+    gap: 10,
   },
   choiceButton: {
-    backgroundColor: "#7B5BA6",
+    backgroundColor: "#72528A",
     paddingVertical: 10,
     paddingHorizontal: 20,
-    borderRadius: 10,
+    borderRadius: 25,
+    boxShadow: "0 2 15 -1 rgba(27, 27, 27, 0.34)",
   },
   choiceText: {
     fontSize: 18,
     color: "#DDD8B8",
   },
   randomButton: {
-    marginTop: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 25,
-    borderRadius: 20,
-    borderWidth: 1,
+    position: "absolute",
+    backgroundColor: "#542E71",
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 2,
     borderColor: "#DDD8B8",
+    borderRadius: 50,
+    bottom: -25,
+    height: 50,
+    maxWidth: 222,
+    width: "100%",
+    boxShadow: "0 8 15 -8 rgba(27, 27, 27, 0.64)",
   },
   randomButtonText: {
     color: "#DDD8B8",
-    fontSize: 16,
+    fontSize: 18,
+    fontFamily: "Dongle-Regular",
+  },
+  playerCardName: {
+    fontFamily: "Dongle-Regular",
+  },
+  buttonChoiceText: {
+    fontFamily: "Dongle-Regular",
   },
 });

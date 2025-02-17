@@ -1,0 +1,38 @@
+export const translations = {
+  ru: {
+    addPlayer: "Добавить игрока",
+    enterName: "Введите имя",
+    play: "Играть",
+    changeLanguage: "Сменить язык",
+    chooseGame: "Выберите режим игры",
+    partyDescription: "Подходит для малознакомых компаний",
+    hotPartyDescription: "Для тех, кто уже набрался смелости",
+    hardDescription: "Для тех, кому нечего скрывать",
+    couplesDescription: "Режим для игры с партнером",
+    familyDescription: "Подходит для семейных посиделок",
+    yourTurn: "твой ход",
+    truth: "ПРАВДА",
+    dare: "ДЕЙСТВИЕ",
+    randomChoice: "Случайный выбор",
+    done: "Готово",
+  },
+  en: {
+    addPlayer: "Add player",
+    enterName: "Enter name",
+    play: "Play",
+    changeLanguage: "Change language",
+    chooseGame: "Choose gamemode",
+    partyDescription: "Perfect for new acquaintances",
+    hotPartyDescription: "For those who have already loosened up",
+    hardDescription: "For those who have nothing to hide",
+    couplesDescription: "A mode for playing with your partner",
+    familyDescription: "Great for family gatherings",
+    yourTurn: "your turn",
+    truth: "TRUTH",
+    dare: "DARE",
+    randomChoice: "Random choice",
+    done: "Done",
+  },
+};
+
+export type Language = keyof typeof translations;
