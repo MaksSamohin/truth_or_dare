@@ -98,54 +98,50 @@ const MenuScreen = ({ navigation }) => {
           </Text>
         </TouchableOpacity>
         <View style={styles.playerCards}>
-          <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-            style={{ flex: 1 }}
-          >
-            <FlatList
-              data={users}
-              keyExtractor={(item) => item.id.toString()}
-              keyboardShouldPersistTaps="always"
-              renderItem={({ item }) => (
-                <View
-                  style={[
-                    styles.playerCard,
-                    isGameStarted && !item.username && styles.inputError,
-                  ]}
-                >
-                  <View style={styles.playerCardLeft}>
-                    <Image
-                      source={item.username === "" ? icons.girl : icons.boy}
-                      style={{ width: 40, height: 40, marginRight: 10 }}
-                    />
-                    <TextInput
-                      style={styles.playerCardName}
-                      placeholder={t("enterName", language)}
-                      placeholderTextColor="#DDD8B8"
-                      maxLength={32}
-                      value={localNames[item.id] ?? item.username}
-                      onChangeText={(text) =>
-                        setLocalNames((prev) => ({ ...prev, [item.id]: text }))
+          <FlatList
+            data={users}
+            keyExtractor={(item) => item.id.toString()}
+            keyboardShouldPersistTaps="handled"
+            removeClippedSubviews={false}
+            renderItem={({ item }) => (
+              <View
+                style={[
+                  styles.playerCard,
+                  isGameStarted && !item.username && styles.inputError,
+                ]}
+              >
+                <View style={styles.playerCardLeft}>
+                  <Image
+                    source={item.username === "" ? icons.girl : icons.boy}
+                    style={{ width: 40, height: 40, marginRight: 10 }}
+                  />
+                  <TextInput
+                    style={styles.playerCardName}
+                    placeholder={t("enterName", language)}
+                    placeholderTextColor="#DDD8B8"
+                    maxLength={32}
+                    value={localNames[item.id] ?? item.username}
+                    onChangeText={(text) =>
+                      setLocalNames((prev) => ({ ...prev, [item.id]: text }))
+                    }
+                    onBlur={() => {
+                      if (localNames[item.id] !== item.username) {
+                        dispatch(
+                          updateUser({
+                            id: item.id,
+                            username: localNames[item.id],
+                          })
+                        );
                       }
-                      onBlur={() => {
-                        if (localNames[item.id] !== item.username) {
-                          dispatch(
-                            updateUser({
-                              id: item.id,
-                              username: localNames[item.id],
-                            })
-                          );
-                        }
-                      }}
-                    />
-                  </View>
-                  <TouchableOpacity onPress={() => handleDelete(item.id)}>
-                    <Text style={styles.playerDelete}>✕</Text>
-                  </TouchableOpacity>
+                    }}
+                  />
                 </View>
-              )}
-            />
-          </KeyboardAvoidingView>
+                <TouchableOpacity onPress={() => handleDelete(item.id)}>
+                  <Text style={styles.playerDelete}>✕</Text>
+                </TouchableOpacity>
+              </View>
+            )}
+          />
         </View>
         <View>
           <TouchableOpacity style={styles.button} onPress={handleStartGame}>
