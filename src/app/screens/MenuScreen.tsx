@@ -12,7 +12,6 @@ import React, { useState } from "react";
 import Layout from "../../components/Layout";
 import Svg, { Text as TextSvg } from "react-native-svg";
 import { FlatList, GestureHandlerRootView } from "react-native-gesture-handler";
-import { RFValue } from "react-native-responsive-fontsize";
 import uuid from "react-native-uuid";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -106,7 +105,7 @@ const MenuScreen = ({ navigation }) => {
             <FlatList
               data={users}
               keyExtractor={(item) => item.id.toString()}
-              keyboardShouldPersistTaps="handled"
+              keyboardShouldPersistTaps="always"
               renderItem={({ item }) => (
                 <View
                   style={[
@@ -148,37 +147,39 @@ const MenuScreen = ({ navigation }) => {
             />
           </KeyboardAvoidingView>
         </View>
-        <TouchableOpacity style={styles.button} onPress={handleStartGame}>
-          <Text
-            style={[
-              styles.buttonText,
-              { fontSize: localizedFontSize(language, 20, 35) },
-            ]}
+        <View>
+          <TouchableOpacity style={styles.button} onPress={handleStartGame}>
+            <Text
+              style={[
+                styles.buttonText,
+                { fontSize: localizedFontSize(language, 20, 35) },
+              ]}
+            >
+              {t("play", language)}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.changeLangButton}
+            onPress={handleChangeLanguage}
           >
-            {t("play", language)}
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.changeLangButton}
-          onPress={handleChangeLanguage}
-        >
-          <Text
-            style={[
-              styles.buttonText,
-              { fontSize: localizedFontSize(language, 20, 35) },
-            ]}
-          >
-            {t("changeLanguage", language)}
-          </Text>
+            <Text
+              style={[
+                styles.buttonText,
+                { fontSize: localizedFontSize(language, 20, 35) },
+              ]}
+            >
+              {t("changeLanguage", language)}
+            </Text>
 
-          <Image
-            source={
-              language === "ru"
-                ? require("../../../assets/icons/russia.png")
-                : require("../../../assets/icons/en.png")
-            }
-          />
-        </TouchableOpacity>
+            <Image
+              source={
+                language === "ru"
+                  ? require("../../../assets/icons/russia.png")
+                  : require("../../../assets/icons/en.png")
+              }
+            />
+          </TouchableOpacity>
+        </View>
       </Layout>
     </GestureHandlerRootView>
   );
@@ -220,7 +221,8 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 10,
     marginBottom: 30,
-    width: 311,
+    maxWidth: 311,
+    width: "100%",
     backgroundColor: "#696495",
     justifyContent: "space-between",
     flexDirection: "row",
