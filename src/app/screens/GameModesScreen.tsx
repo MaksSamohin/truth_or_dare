@@ -63,11 +63,7 @@ const GameModesScreen = ({ navigation }) => {
                     const randomIndex = Math.floor(
                       Math.random() * players.length
                     );
-                    dispatch(
-                      setCurrentPlayer(
-                        players[randomIndex]?.username || "Игрок"
-                      )
-                    );
+                    dispatch(setCurrentPlayer(players[randomIndex]?.username));
                   }
 
                   navigation.navigate("StartGame");
