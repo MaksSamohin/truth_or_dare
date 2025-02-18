@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { nextPlayer, selectGamemode } from "../../store/gameSlice";
 import { selectLanguage, t } from "../../store/localizationSlice";
 import { gameData } from "../data/data";
+import { localizedFontSize } from "../utils/helpers";
 
 type GameCardScreenRouteProp = RouteProp<RootStackParamList, "GameCardScreen">;
 
@@ -58,7 +59,14 @@ const GameCardScreen = ({ navigation }) => {
       </Pressable>
       <View>
         <View style={styles.card}>
-          <Text style={styles.taskText}>{taskText}</Text>
+          <Text
+            style={[
+              styles.taskText,
+              { fontSize: localizedFontSize(language, 22, 34) },
+            ]}
+          >
+            {taskText}
+          </Text>
           <TouchableOpacity
             style={styles.doneButton}
             onPress={() => {
@@ -66,7 +74,14 @@ const GameCardScreen = ({ navigation }) => {
               dispatch(nextPlayer());
             }}
           >
-            <Text style={styles.taskText}>{t("done", language)}</Text>
+            <Text
+              style={[
+                styles.taskText,
+                { fontSize: localizedFontSize(language, 22, 34) },
+              ]}
+            >
+              {t("done", language)}
+            </Text>
           </TouchableOpacity>
         </View>
         <View style={styles.downButtons}>
@@ -100,7 +115,6 @@ const styles = StyleSheet.create({
   taskText: {
     fontFamily: "Dongle-Regular",
     color: "#DDD8B8",
-    fontSize: 22,
   },
   card: {
     marginTop: 150,

@@ -8,11 +8,11 @@ import Layout from "../../components/Layout";
 import Svg, { Text as TextSvg } from "react-native-svg";
 import { Pressable } from "react-native";
 import { selectLanguage, t } from "../../store/localizationSlice";
+import { localizedFontSize } from "../utils/helpers";
 
 const StartGameScreen = ({ navigation }) => {
   const currentPlayer = useSelector(selectPlayer);
   const language = useSelector(selectLanguage);
-  console.log(currentPlayer);
   const handleChoice = (type: "truth" | "dare") => {
     navigation.navigate("GameCard", { type });
   };
@@ -54,7 +54,16 @@ const StartGameScreen = ({ navigation }) => {
             </TextSvg>
           </Svg>
         </View>
-        <Text style={styles.subtitle}>{t("yourTurn", language)}</Text>
+        <Text
+          style={[
+            styles.subtitle,
+            {
+              fontSize: localizedFontSize(language, 18, 26),
+            },
+          ]}
+        >
+          {t("yourTurn", language)}
+        </Text>
         <View style={styles.buttonsContainer}>
           <TouchableOpacity
             style={styles.choiceButton}
@@ -65,7 +74,7 @@ const StartGameScreen = ({ navigation }) => {
                 {...styles.playerCardName}
                 x="50%"
                 y="18"
-                fontSize="18"
+                fontSize={localizedFontSize(language, 18, 30)}
                 stroke="#DDD8B8"
                 strokeWidth="2"
                 fill="none"
@@ -77,7 +86,7 @@ const StartGameScreen = ({ navigation }) => {
                 {...styles.playerCardName}
                 x="50%"
                 y="18"
-                fontSize="18"
+                fontSize={localizedFontSize(language, 18, 30)}
                 fill="#72528A"
                 textAnchor="middle"
               >
@@ -94,7 +103,7 @@ const StartGameScreen = ({ navigation }) => {
                 {...styles.buttonChoiceText}
                 x="50%"
                 y="18"
-                fontSize="18"
+                fontSize={localizedFontSize(language, 18, 30)}
                 stroke="#DDD8B8"
                 strokeWidth="2"
                 fill="none"
@@ -106,7 +115,7 @@ const StartGameScreen = ({ navigation }) => {
                 {...styles.buttonChoiceText}
                 x="50%"
                 y="18"
-                fontSize="18"
+                fontSize={localizedFontSize(language, 18, 30)}
                 fill="#72528A"
                 textAnchor="middle"
               >
@@ -119,7 +128,12 @@ const StartGameScreen = ({ navigation }) => {
           style={styles.randomButton}
           onPress={() => handleChoice(Math.random() < 0.5 ? "truth" : "dare")}
         >
-          <Text style={styles.randomButtonText}>
+          <Text
+            style={[
+              styles.randomButtonText,
+              { fontSize: localizedFontSize(language, 18, 26) },
+            ]}
+          >
             {t("randomChoice", language)}
           </Text>
         </TouchableOpacity>
@@ -156,7 +170,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   subtitle: {
-    fontSize: 18,
     color: "#DDD8B8",
     marginBottom: 59,
     fontFamily: "Dongle-Regular",
@@ -195,7 +208,6 @@ const styles = StyleSheet.create({
   },
   randomButtonText: {
     color: "#DDD8B8",
-    fontSize: 18,
     fontFamily: "Dongle-Regular",
   },
   playerCardName: {

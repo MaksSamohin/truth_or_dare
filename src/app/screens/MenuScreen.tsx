@@ -12,6 +12,7 @@ import React, { useState } from "react";
 import Layout from "../../components/Layout";
 import Svg, { Text as TextSvg } from "react-native-svg";
 import { FlatList, GestureHandlerRootView } from "react-native-gesture-handler";
+import { RFValue } from "react-native-responsive-fontsize";
 import uuid from "react-native-uuid";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -25,6 +26,7 @@ import {
   toggleLanguage,
   t,
 } from "../../store/localizationSlice";
+import { localizedFontSize } from "../utils/helpers";
 
 const MenuScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -87,7 +89,14 @@ const MenuScreen = ({ navigation }) => {
         </View>
 
         <TouchableOpacity style={styles.button} onPress={handleAdd}>
-          <Text style={styles.buttonText}>{t("addPlayer", language)}</Text>
+          <Text
+            style={[
+              styles.buttonText,
+              { fontSize: localizedFontSize(language, 20, 35) },
+            ]}
+          >
+            {t("addPlayer", language)}
+          </Text>
         </TouchableOpacity>
         <View style={styles.playerCards}>
           <KeyboardAvoidingView
@@ -140,13 +149,27 @@ const MenuScreen = ({ navigation }) => {
           </KeyboardAvoidingView>
         </View>
         <TouchableOpacity style={styles.button} onPress={handleStartGame}>
-          <Text style={styles.buttonText}>{t("play", language)}</Text>
+          <Text
+            style={[
+              styles.buttonText,
+              { fontSize: localizedFontSize(language, 20, 35) },
+            ]}
+          >
+            {t("play", language)}
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.changeLangButton}
           onPress={handleChangeLanguage}
         >
-          <Text style={styles.buttonText}>{t("changeLanguage", language)}</Text>
+          <Text
+            style={[
+              styles.buttonText,
+              { fontSize: localizedFontSize(language, 20, 35) },
+            ]}
+          >
+            {t("changeLanguage", language)}
+          </Text>
 
           <Image
             source={
@@ -182,7 +205,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontFamily: "Dongle-Regular",
-    fontSize: 20,
     color: "#DDD8B8",
     textShadowColor: "rgba(0, 0, 0, 0.2)",
     textShadowOffset: { width: 0, height: 1 },
@@ -219,6 +241,7 @@ const styles = StyleSheet.create({
   },
   changeLangButton: {
     justifyContent: "center",
+    alignItems: "center",
     flexDirection: "row",
     gap: 5,
   },
