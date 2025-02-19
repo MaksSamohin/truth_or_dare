@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import {
   View,
   Text,
@@ -17,7 +17,7 @@ import { selectLanguage, t } from "../../store/localizationSlice";
 import { gameData } from "../data/data";
 import { localizedFontSize } from "../utils/helpers";
 
-type GameCardScreenRouteProp = RouteProp<RootStackParamList, "GameCardScreen">;
+type GameCardScreenRouteProp = RouteProp<RootStackParamList, "GameCard">;
 
 const GameCardScreen = ({ navigation }) => {
   const route = useRoute<GameCardScreenRouteProp>();
@@ -49,7 +49,12 @@ const GameCardScreen = ({ navigation }) => {
   };
   return (
     <Layout>
-      <Pressable onPress={() => navigation.navigate("GameModes")} hitSlop={150}>
+      <Pressable
+        onPress={() =>
+          navigation.navigate("GameModes", { fromScreen: "GameCard" })
+        }
+        hitSlop={150}
+      >
         <Icon
           style={styles.backButton}
           name="chevron-left"
@@ -70,7 +75,7 @@ const GameCardScreen = ({ navigation }) => {
           <TouchableOpacity
             style={styles.doneButton}
             onPress={() => {
-              navigation.navigate("StartGame");
+              navigation.navigate("StartGame", { fromScreen: "GameCard" });
               dispatch(nextPlayer());
             }}
           >
@@ -87,7 +92,9 @@ const GameCardScreen = ({ navigation }) => {
         <View style={styles.downButtons}>
           <TouchableOpacity
             style={styles.downButton}
-            onPress={() => navigation.navigate("StartGame")}
+            onPress={() =>
+              navigation.navigate("StartGame", { fromScreen: "GameCard" })
+            }
           >
             <Image source={require("../../../assets/icons/x.png")} />
           </TouchableOpacity>

@@ -1,12 +1,13 @@
 interface GameCardScreenParams {
-  type: "truth" | "dare";
+  type?: "truth" | "dare";
+  fromScreen?: "StartGame";
 }
 
 export type RootStackParamList = {
-  Menu: null;
-  GameModes: null;
-  StartGame: null;
-  GameCardScreen: GameCardScreenParams;
+  Menu: undefined;
+  GameModes: { fromScreen?: "StartGame" | "GameCard" | "Menu" };
+  StartGame: { fromScreen?: "GameModes" | "GameCard" };
+  GameCard: GameCardScreenParams;
 };
 
 export interface UserInterface {

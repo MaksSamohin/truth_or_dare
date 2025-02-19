@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store/store";
 import { selectGamemode, selectPlayer } from "../../store/gameSlice";
@@ -9,17 +9,30 @@ import Svg, { Text as TextSvg } from "react-native-svg";
 import { Pressable } from "react-native";
 import { selectLanguage, t } from "../../store/localizationSlice";
 import { localizedFontSize } from "../utils/helpers";
+import { RouteProp, useRoute } from "@react-navigation/native";
+import { RootStackParamList } from "../utils/types";
+import { Vibration } from "react-native";
+
+type StartGameScreenRouteProp = RouteProp<RootStackParamList, "StartGame">;
 
 const StartGameScreen = ({ navigation }) => {
   const currentPlayer = useSelector(selectPlayer);
   const language = useSelector(selectLanguage);
+  const route = useRoute<StartGameScreenRouteProp>();
+
   const handleChoice = (type: "truth" | "dare") => {
-    navigation.navigate("GameCard", { type });
+    Vibration.vibrate(100);
+    navigation.navigate("GameCard", { type, fromScreen: "StartGame" });
   };
 
   return (
     <Layout>
-      <Pressable onPress={() => navigation.navigate("GameModes")} hitSlop={150}>
+      <Pressable
+        onPress={() =>
+          navigation.navigate("GameModes", { fromScreen: "StartGame" })
+        }
+        hitSlop={150}
+      >
         <Icon
           style={styles.backButton}
           name="chevron-left"

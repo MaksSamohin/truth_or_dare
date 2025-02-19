@@ -83,7 +83,7 @@ const GameModesScreen = ({ navigation }) => {
                     dispatch(setCurrentPlayer(players[randomIndex]?.username));
                   }
 
-                  navigation.navigate("StartGame");
+                  navigation.navigate("StartGame", { fromScreen: "GameModes" });
                 }}
               >
                 <View style={styles.gamemodeCardIcon}>

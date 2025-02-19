@@ -89,7 +89,7 @@ const MenuScreen = ({ navigation }) => {
     ) {
       return;
     }
-    navigation.navigate("GameModes");
+    navigation.navigate("GameModes", { fromScreen: "Menu" });
   };
 
   return (
