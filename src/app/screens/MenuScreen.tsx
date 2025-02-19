@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -5,10 +6,7 @@ import {
   Text,
   TextInput,
   Image,
-  KeyboardAvoidingView,
-  Platform,
 } from "react-native";
-import React, { useState } from "react";
 import Layout from "../../components/Layout";
 import Svg, { Text as TextSvg } from "react-native-svg";
 import { FlatList, GestureHandlerRootView } from "react-native-gesture-handler";
@@ -26,6 +24,7 @@ import {
   t,
 } from "../../store/localizationSlice";
 import { localizedFontSize } from "../utils/helpers";
+import { useFocusEffect } from "@react-navigation/native";
 
 const MenuScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -58,6 +57,29 @@ const MenuScreen = ({ navigation }) => {
     });
     dispatch(removeUser(id));
   };
+
+  useEffect(() => {
+    users.forEach((user) => {
+      const newName = localNames[user.id];
+      if (newName !== undefined && newName !== user.username) {
+        dispatch(updateUser({ id: user.id, username: newName }));
+      }
+    });
+  }, [localNames, users, dispatch]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      return () => {
+        users.forEach((user) => {
+          const newName = localNames[user.id];
+          if (newName !== undefined && newName !== user.username) {
+            dispatch(updateUser({ id: user.id, username: newName }));
+          }
+        });
+      };
+    }, [localNames, users, dispatch])
+  );
+
   const handleStartGame = () => {
     setIsGameStarted(true);
 
@@ -69,6 +91,7 @@ const MenuScreen = ({ navigation }) => {
     }
     navigation.navigate("GameModes");
   };
+  console.log(users);
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Layout>
@@ -97,6 +120,7 @@ const MenuScreen = ({ navigation }) => {
             {t("addPlayer", language)}
           </Text>
         </TouchableOpacity>
+
         <View style={styles.playerCards}>
           <FlatList
             data={users}
@@ -125,11 +149,12 @@ const MenuScreen = ({ navigation }) => {
                       setLocalNames((prev) => ({ ...prev, [item.id]: text }))
                     }
                     onBlur={() => {
-                      if (localNames[item.id] !== item.username) {
+                      const newName = localNames[item.id];
+                      if (newName !== item.username) {
                         dispatch(
                           updateUser({
                             id: item.id,
-                            username: localNames[item.id],
+                            username: newName,
                           })
                         );
                       }
@@ -143,6 +168,7 @@ const MenuScreen = ({ navigation }) => {
             )}
           />
         </View>
+
         <View>
           <TouchableOpacity style={styles.button} onPress={handleStartGame}>
             <Text
@@ -154,6 +180,7 @@ const MenuScreen = ({ navigation }) => {
               {t("play", language)}
             </Text>
           </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.changeLangButton}
             onPress={handleChangeLanguage}
@@ -248,4 +275,5 @@ const styles = StyleSheet.create({
     borderColor: "red",
   },
 });
+
 export default MenuScreen;
