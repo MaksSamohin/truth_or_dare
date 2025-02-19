@@ -91,7 +91,7 @@ const MenuScreen = ({ navigation }) => {
     }
     navigation.navigate("GameModes");
   };
-  console.log(users);
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Layout>
