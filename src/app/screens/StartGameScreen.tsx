@@ -160,8 +160,8 @@ export default StartGameScreen;
 const styles = StyleSheet.create({
   backButton: {
     position: "absolute",
-    left: 5,
-    top: 50,
+    left: -5,
+    top: 52,
     textShadowColor: "rgba(0, 0, 0, 0.2)",
     textShadowOffset: { width: 0, height: 1 },
     textShadowRadius: 15,

@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   backButton: {
     position: "absolute",
     left: -5,
-    top: 50,
+    top: 52,
     textShadowColor: "rgba(0, 0, 0, 0.6)",
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 15,
