@@ -148,8 +148,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     left: -5,
     top: 15,
-    textShadowColor: "rgba(0, 0, 0, 0.2)",
-    textShadowOffset: { width: 0, height: 1 },
+    textShadowColor: "rgba(0, 0, 0, 0.6)",
+    textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 15,
   },
   card: {

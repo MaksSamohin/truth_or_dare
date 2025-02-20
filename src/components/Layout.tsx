@@ -1,14 +1,17 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, StatusBar } from "react-native";
 import React from "react";
 import { getStatusBarHeight } from "react-native-status-bar-height";
 const statusBarHeight = getStatusBarHeight();
+
+StatusBar.setHidden(true);
+StatusBar.setBarStyle("light-content");
 interface LayoutProps {
   children: React.ReactNode;
 }
 
 const Layout = ({ children }: LayoutProps) => {
   return (
-    <View style={[styles.container, { marginTop: statusBarHeight }]}>
+    <View style={[styles.container, { paddingTop: statusBarHeight }]}>
       {children}
     </View>
   );
