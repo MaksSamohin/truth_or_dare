@@ -1,6 +1,7 @@
-import { View, Text, StyleSheet, StatusBar } from "react-native";
+import { View, Text, StyleSheet, StatusBar, SafeAreaView } from "react-native";
 import React from "react";
 import { getStatusBarHeight } from "react-native-status-bar-height";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 const statusBarHeight = getStatusBarHeight();
 
 StatusBar.setHidden(true);
@@ -10,10 +11,16 @@ interface LayoutProps {
 }
 
 const Layout = ({ children }: LayoutProps) => {
+  const insets = useSafeAreaInsets();
   return (
-    <View style={[styles.container, { paddingTop: statusBarHeight }]}>
+    <SafeAreaView
+      style={[
+        styles.container,
+        { paddingTop: insets.top + 5, paddingBottom: insets.bottom + 15 },
+      ]}
+    >
       {children}
-    </View>
+    </SafeAreaView>
   );
 };
 
