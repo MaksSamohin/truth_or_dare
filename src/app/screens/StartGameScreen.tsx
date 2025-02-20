@@ -147,13 +147,13 @@ const styles = StyleSheet.create({
   backButton: {
     position: "absolute",
     left: -5,
-    top: 52,
+    top: 15,
     textShadowColor: "rgba(0, 0, 0, 0.2)",
     textShadowOffset: { width: 0, height: 1 },
     textShadowRadius: 15,
   },
   card: {
-    marginTop: 150,
+    marginTop: "35%",
     backgroundColor: "#542E71",
     padding: 20,
     margin: 20,

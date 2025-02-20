@@ -38,7 +38,11 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Menu" id={undefined}>
+        <Stack.Navigator
+          initialRouteName="Menu"
+          id={undefined}
+          screenOptions={{ headerShown: false }}
+        >
           <Stack.Screen
             name="Menu"
             component={MenuScreen}

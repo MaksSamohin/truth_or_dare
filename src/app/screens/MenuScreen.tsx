@@ -96,14 +96,14 @@ const MenuScreen = ({ navigation }) => {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Layout>
         <View style={styles.logo}>
-          <Svg height="55" width="314">
+          <Svg height="33" width="314">
             <TextSvg
               {...styles.outlinedText}
               fill="transparent"
               strokeWidth="1"
               stroke="#DDD8B8"
               x="10"
-              y="50"
+              y="30"
             >
               #TRUTHORDARE
             </TextSvg>

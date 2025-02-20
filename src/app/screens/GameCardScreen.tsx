@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   backButton: {
     position: "absolute",
     left: -5,
-    top: 52,
+    top: 15,
     textShadowColor: "rgba(0, 0, 0, 0.6)",
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 15,
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
   },
   card: {
-    marginTop: 150,
+    marginTop: "35%",
     minHeight: 250,
     backgroundColor: "#542E71",
     padding: 20,
