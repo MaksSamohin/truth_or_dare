@@ -22,7 +22,6 @@ import {
 import { selectAllusers } from "../../store/usersSlice";
 import { selectLanguage, t } from "../../store/localizationSlice";
 import { translations } from "../../translations/translations";
-import { localizedFontSize } from "../utils/helpers";
 
 const GameModesScreen = ({ navigation }) => {
   const users = useSelector(selectAllusers);
@@ -47,24 +46,8 @@ const GameModesScreen = ({ navigation }) => {
             color="#DDD8B8"
           />
         </Pressable>
-        <View
-          style={[
-            styles.titleContainer,
-            {
-              marginTop: language === "ru" ? 50 : 40,
-            },
-          ]}
-        >
-          <Text
-            style={[
-              styles.titleText,
-              {
-                fontSize: localizedFontSize(language, 24, 40),
-              },
-            ]}
-          >
-            {t("chooseGame", language)}
-          </Text>
+        <View style={[styles.titleContainer]}>
+          <Text style={[styles.titleText]}>{t("chooseGame", language)}</Text>
         </View>
         <View style={styles.gamemodeCards}>
           <FlatList
@@ -113,12 +96,7 @@ const GameModesScreen = ({ navigation }) => {
                     </TextSvg>
                   </Svg>
 
-                  <Text
-                    style={[
-                      styles.gamemodeCardDescription,
-                      { fontSize: localizedFontSize(language, 11, 18) },
-                    ]}
-                  >
+                  <Text style={[styles.gamemodeCardDescription]}>
                     {translations[language][item.descriptionKey]}
                   </Text>
                 </View>
@@ -137,6 +115,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 45,
+    marginTop: 47,
   },
   backButton: {
     position: "absolute",
@@ -149,8 +128,9 @@ const styles = StyleSheet.create({
   titleText: {
     marginRight: 10,
     textAlign: "center",
-    fontFamily: "Dongle-Regular",
+    fontFamily: "Nunito-Regular",
     color: "#DDD8B8",
+    fontSize: 24,
     textShadowColor: "rgba(0, 0, 0, 0.2)",
     textShadowOffset: { width: 0, height: 1 },
     textShadowRadius: 10,
@@ -190,9 +170,9 @@ const styles = StyleSheet.create({
     fontFamily: "Dongle-Regular",
   },
   gamemodeCardDescription: {
-    fontFamily: "Dongle-Regular",
+    fontFamily: "Nunito-Regular",
     color: "#DDD8B8",
-    fontSize: 11,
+    fontSize: 14,
     flexWrap: "wrap",
     width: "100%",
     paddingRight: 15,

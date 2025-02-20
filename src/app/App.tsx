@@ -20,6 +20,9 @@ export default function App() {
     "Dongle-Bold": require("../../assets/fonts/Dongle-Bold.ttf"),
     "Dongle-Regular": require("../../assets/fonts/Dongle-Regular.ttf"),
     "Dongle-Light": require("../../assets/fonts/Dongle-Light.ttf"),
+    "Nunito-Bold": require("../../assets/fonts/Nunito-Bold.ttf"),
+    "Nunito-Regular": require("../../assets/fonts/Nunito-Regular.ttf"),
+    "Nunito-Light": require("../../assets/fonts/Nunito-Light.ttf"),
   });
 
   useEffect(() => {

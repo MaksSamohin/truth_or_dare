@@ -111,14 +111,7 @@ const MenuScreen = ({ navigation }) => {
         </View>
 
         <TouchableOpacity style={styles.button} onPress={handleAdd}>
-          <Text
-            style={[
-              styles.buttonText,
-              { fontSize: localizedFontSize(language, 20, 35) },
-            ]}
-          >
-            {t("addPlayer", language)}
-          </Text>
+          <Text style={[styles.buttonText]}>{t("addPlayer", language)}</Text>
         </TouchableOpacity>
 
         <View style={styles.playerCards}>
@@ -171,26 +164,14 @@ const MenuScreen = ({ navigation }) => {
 
         <View>
           <TouchableOpacity style={styles.button} onPress={handleStartGame}>
-            <Text
-              style={[
-                styles.buttonText,
-                { fontSize: localizedFontSize(language, 20, 35) },
-              ]}
-            >
-              {t("play", language)}
-            </Text>
+            <Text style={[styles.buttonText]}>{t("play", language)}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.changeLangButton}
             onPress={handleChangeLanguage}
           >
-            <Text
-              style={[
-                styles.buttonText,
-                { fontSize: localizedFontSize(language, 20, 35) },
-              ]}
-            >
+            <Text style={[styles.buttonText]}>
               {t("changeLanguage", language)}
             </Text>
 
@@ -228,11 +209,12 @@ const styles = StyleSheet.create({
     boxShadow: "0 2 10 -4 rgba(27, 27, 27, 0.64)",
   },
   buttonText: {
-    fontFamily: "Dongle-Regular",
+    fontFamily: "Nunito-Regular",
     color: "#DDD8B8",
     textShadowColor: "rgba(0, 0, 0, 0.2)",
     textShadowOffset: { width: 0, height: 1 },
     textShadowRadius: 1,
+    fontSize: 20,
   },
   playerCards: {
     flex: 1,
@@ -259,12 +241,14 @@ const styles = StyleSheet.create({
     width: 220,
     fontSize: 15,
     color: "#DDD8B8",
+    fontFamily: "Nunito-Regular",
   },
   playerDelete: {
     color: "#542E71",
     fontSize: 18,
   },
   changeLangButton: {
+    height: 30,
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",

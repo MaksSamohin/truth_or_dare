@@ -64,14 +64,7 @@ const GameCardScreen = ({ navigation }) => {
       </Pressable>
       <View>
         <View style={styles.card}>
-          <Text
-            style={[
-              styles.taskText,
-              { fontSize: localizedFontSize(language, 22, 34) },
-            ]}
-          >
-            {taskText}
-          </Text>
+          <Text style={[styles.taskText]}>{taskText}</Text>
           <TouchableOpacity
             style={styles.doneButton}
             onPress={() => {
@@ -79,14 +72,7 @@ const GameCardScreen = ({ navigation }) => {
               dispatch(nextPlayer());
             }}
           >
-            <Text
-              style={[
-                styles.taskText,
-                { fontSize: localizedFontSize(language, 22, 34) },
-              ]}
-            >
-              {t("done", language)}
-            </Text>
+            <Text style={[styles.doneButtonText]}>{t("done", language)}</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.downButtons}>
@@ -120,8 +106,9 @@ const styles = StyleSheet.create({
     textShadowRadius: 15,
   },
   taskText: {
-    fontFamily: "Dongle-Regular",
+    fontFamily: "Nunito-Regular",
     color: "#DDD8B8",
+    fontSize: 22,
   },
   card: {
     marginTop: 150,
@@ -167,9 +154,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     boxShadow: "0 5 6 0 rgba(27, 27, 27, 0.34)",
   },
-  downButtonText: {
+  doneButtonText: {
     color: "#DDD8B8",
-    fontSize: 20,
+    fontSize: 24,
   },
 });
 
